@@ -23,6 +23,8 @@ public:
 
   ~Player();
 private:
+  int numofships;
+  Board* m_Board =nullptr;
 
 };
 #endif
