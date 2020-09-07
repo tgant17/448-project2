@@ -20,25 +20,22 @@
 class Executive
 {
 private:
-  
+Board m_Board1;
+Board m_Board2;
 
 
 public:
-  Executive();
-  /*Pre: constructor for executive object
-  Post: takes in data from the file to create the tree
-  Return: executive object*/
-  void run();
-  /*Pre: runs program once an object is created
-  Post: will present a menu that will allow the user to alter data in the tree
-  Return: nothing*/
-  ~Executive();
-  /*Pre: destructor for object
-  Post: destroys executive object once if falls out of scope
-  Return: nothing*/
-  void runCopy();
-  /*Pre: runs if the binary search tree is copied
-  Post: presents same menu that was used for original binary search tree
-  Return: nothing*/
+    Executive();
+    /*Pre: constructor for executive object
+    Post: takes in data from the file to create the tree
+    Return: executive object*/
+    void run();
+    /*Pre: runs program once an object is created
+    Post: will present a menu that will allow the user to alter data in the tree
+    Return: nothing*/
+    ~Executive();
+    /*Pre: destructor for object
+    Post: destroys executive object once if falls out of scope
+    Return: nothing*/
 };
 #endif
