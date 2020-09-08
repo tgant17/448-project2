@@ -1,4 +1,4 @@
-
+// Set t
 #ifndef BOARD_H
 #define BOARD_H
 #include <iostream>
@@ -20,23 +20,29 @@ class Board {
         int convertCharToInt(char character);
 
         //return true if the coordinate of the ship is off the board
-        bool isOffArray(int row, int shipStart, int shipEnd);
+        bool isOffArray(int p, int shipStart, int shipEnd);
 
         //return true if size of the ship is within the range
         bool isValidSize(int shipStart, int shipEnd);
 
-        //return true if a tile of the board is occupied by another ship, prevent the ships from overlapping each other
-        bool isOccupied(int row, int shipStart, int shipEnd);
+        //return true if there is an occupied in a horizontal ship
+        bool isOccupiedHorizontally(int p, int shipStart, int shipEnd);
+
+        //return true if there is an occupied in a vertical ship
+        bool isOccupiedVertically(int p, int shipStart, int shipEnd);
 
         //return true if the ship is valid
-        bool isValidShip(int row, int shipStart, int shipEnd);
+        bool isValidShip(int p, int shipStart, int shipEnd);
 
-        //Place a ship on the board
-        void setShip(int row, char colStart, char colEnd);
+        //Place a horizontal ship on the board
+        bool setShipHorizontally(int row, char colStart, char colEnd);
+
+        //Place a vertical ship on the board
+        bool setShipVertically(char col, int rowStart, int rowEnd);
 
         //return true if player hit another player's ship
         bool Hit(char **board, int row, char col);
-        
+
         ~Board();
 };
 #endif

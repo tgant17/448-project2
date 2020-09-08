@@ -16,7 +16,7 @@ Board::Board(){
                 rowLabel++;
             }
             else{
-                m_board[i][j] = 'O';
+                m_board[i][j] = '-';
             }
             
         }
@@ -69,8 +69,8 @@ int Board::convertCharToInt(char character){
 
 
 //check if the ship is off the board
-bool Board::isOffArray(int row, int shipStart, int shipEnd){
-    if(row < 1 || row > 9 || shipStart < 1 || shipEnd > 9 ){
+bool Board::isOffArray(int p, int shipStart, int shipEnd){
+    if(p < 1 || p > 9 || shipStart < 1 || shipEnd > 9 ){
         return true;
     }
     return false;
@@ -82,32 +82,56 @@ bool Board::isValidSize(int shipStart, int shipEnd){
 }
 
 //check if the position is occupied
-bool Board::isOccupied(int row, int shipStart, int shipEnd){
+bool Board::isOccupiedHorizontally(int p, int shipStart, int shipEnd){
     for(int i = shipStart; i <= shipEnd; i++){
-        if(m_board[row][i] == 'T'){
+        if(m_board[p][i] == 'S'){
             return true;
         }
     }
     return false;    
 }
 
+bool Board::isOccupiedVertically(int p, int shipStart, int shipEnd){
+    for(int i = shipStart; i <= shipEnd; i++){
+        if(m_board[i][p] == 'S'){
+            return true;
+        }
+    }
+    return false;    
+}
 //check if it is valid to set the Ship
-bool Board::isValidShip(int row, int shipStart, int shipEnd){
-    return (!isOffArray(row, shipStart, shipEnd) && !isOccupied(row, shipStart, shipEnd) && isValidSize(shipStart, shipEnd));
+bool Board::isValidShip(int p, int shipStart, int shipEnd){
+    return (!isOffArray(p, shipStart, shipEnd) && isValidSize(shipStart, shipEnd));
 }
 
 
 //change the 'O' coordinates into 'T' coordinates
-void Board::setShip(int row, char colStart, char colEnd){
+bool Board::setShipHorizontally(int row, char colStart, char colEnd){
     int shipStart = convertCharToInt(colStart);
     int shipEnd = convertCharToInt(colEnd);
-    if(isValidShip(row, shipStart, shipEnd)){
+    if(isValidShip(row, shipStart, shipEnd) && !isOccupiedHorizontally(row, colStart, colEnd)){
         for(int i = shipStart; i <= shipEnd; i++){
-            m_board[row][i] = 'T';
+            m_board[row][i] = 'S';
         }
+        return true;
     }
     else{
-        cout<<"This ship is invalid"<<endl;
+        return false;
+    }
+    
+}
+
+
+bool Board::setShipVertically(char col, int rowStart, int rowEnd){
+    int intCol = convertCharToInt(col);
+    if(isValidShip(intCol, rowStart, rowEnd) && !isOccupiedVertically(intCol, rowStart, rowEnd)){
+        for(int i = rowStart; i <= rowEnd; i++){
+            m_board[i][intCol] = 'S';
+        }
+        return true;
+    }
+    else{
+        return false;
     }
     
 }
@@ -115,8 +139,8 @@ void Board::setShip(int row, char colStart, char colEnd){
 //check if player hit a occupied tile
 bool Board::Hit(char **board, int row, char col){
     int integerCol = convertCharToInt(col);
-    if(board[row][integerCol] == 'T'){
-        board[row][integerCol] = 'O';
+    if(board[row][integerCol] == 'S'){
+        board[row][integerCol] = '-';
         return true;
     }
     return false;
