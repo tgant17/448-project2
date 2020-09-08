@@ -81,7 +81,7 @@ bool Board::isValidSize(int shipStart, int shipEnd){
     return (shipStart <= shipEnd);
 }
 
-//check if the position is occupied
+//check if the position is occupied horizontally
 bool Board::isOccupiedHorizontally(int p, int shipStart, int shipEnd){
     for(int i = shipStart; i <= shipEnd; i++){
         if(m_board[p][i] == 'S'){
@@ -91,6 +91,7 @@ bool Board::isOccupiedHorizontally(int p, int shipStart, int shipEnd){
     return false;    
 }
 
+//check if the postion is occupied vertically
 bool Board::isOccupiedVertically(int p, int shipStart, int shipEnd){
     for(int i = shipStart; i <= shipEnd; i++){
         if(m_board[i][p] == 'S'){
@@ -105,7 +106,7 @@ bool Board::isValidShip(int p, int shipStart, int shipEnd){
 }
 
 
-//change the 'O' coordinates into 'T' coordinates
+//Set a ship horizontally on the board
 bool Board::setShipHorizontally(int row, char colStart, char colEnd){
     int shipStart = convertCharToInt(colStart);
     int shipEnd = convertCharToInt(colEnd);
@@ -121,7 +122,7 @@ bool Board::setShipHorizontally(int row, char colStart, char colEnd){
     
 }
 
-
+//Set a ship vertically on the board
 bool Board::setShipVertically(char col, int rowStart, int rowEnd){
     int intCol = convertCharToInt(col);
     if(isValidShip(intCol, rowStart, rowEnd) && !isOccupiedVertically(intCol, rowStart, rowEnd)){
