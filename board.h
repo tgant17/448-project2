@@ -8,7 +8,9 @@ using namespace std;
 
 class Board {
     private:
+        //board to place ships
         char **m_board;
+        //board to keep track player's moves
         char **m_playerViewBoard;
 
     public:
