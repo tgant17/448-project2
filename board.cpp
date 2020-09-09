@@ -7,7 +7,7 @@ Board::Board(){
     for (int i = 0; i < 10; i++){
         m_board[i] = new char[10];
     }
-    
+    //create m_board
     char rowLabel = '0';
     for (int i = 0; i < 10; i++){
         for(int j = 0; j < 10; j++){
@@ -21,8 +21,24 @@ Board::Board(){
             
         }
     }
+
+    //create m_playerViewBoard
+    char rowPlayerViewLabel = '0';
+    for (int i = 0; i < 10; i++){
+        for(int j = 0; j < 10; j++){
+            if(j == 0){
+                m_playerViewBoard[i][j] = rowPlayerViewLabel;
+                rowLabel++;
+            }
+            else{
+                m_playerViewBoard[i][j] = '-';
+            }
+            
+        }
+    }
 }
 
+//print m_board
 void Board::printBoard(){
     cout<< " "<<"\t";
     char colLabel = 'A';
@@ -40,6 +56,35 @@ void Board::printBoard(){
     cout<<endl;
 }
 
+//print m_playerViewBoard
+void Board:: printPlayerViewBoard(){
+    cout<< " "<<"\t";
+    char colLabel = 'A';
+    for(char i = colLabel; i <= 'I'; i++){
+        cout<< i << "\t";
+    }
+    cout<<endl;
+    cout<<endl;
+    for (int i = 1; i < 10; i++){
+        for(int j = 0; j < 10; j++){
+            cout<<m_playerViewBoard[i][j]<<"\t";    
+        }
+        cout<<endl;
+    }
+    cout<<endl;
+}
+
+//return a character of a location on m_board
+char Board:: getLocation(int row, int col){
+    return m_board[row][col];
+}
+
+//set a location of m_board to a character
+void Board:: setLocation(int row, int col, char newChar){
+    m_board[row][col] = newChar;
+}
+
+//convert character column into integer
 int Board::convertCharToInt(char character){
     switch (character)
     {
@@ -134,22 +179,31 @@ bool Board::setShipVertically(char col, int rowStart, int rowEnd){
     else{
         return false;
     }
-    
 }
 
-//check if player hit a occupied tile
-bool Board::Hit(char **board, int row, char col){
-    int integerCol = convertCharToInt(col);
-    if(board[row][integerCol] == 'S'){
-        board[row][integerCol] = '-';
+//return true if player hit a board and updatge m_playerViewBoard
+bool Board::Hit(Board otherPlayerBoard, int row, char col){
+    int intCol = convertCharToInt(col);
+    if(otherPlayerBoard.getLocation(row, intCol) == 'S'){
+        otherPlayerBoard.setLocation(row, intCol, '-');
+        m_playerViewBoard[row][intCol] = 'H';
         return true;
+    }
+    else{
+        m_playerViewBoard[row][intCol] = 'M';
     }
     return false;
 }
 
+//destructor, deallocatte m_board and m_playerViewBoard
 Board:: ~Board(){
     for(int i = 0; i < 10; i++){
     delete [] m_board[i];
   }
   delete[] m_board;
+
+  for(int i = 0; i < 10; i++){
+    delete [] m_playerViewBoard[i];
+  }
+  delete[] m_playerViewBoard;
 }
