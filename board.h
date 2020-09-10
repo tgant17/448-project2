@@ -9,12 +9,13 @@ using namespace std;
 class Board {
     private:
         //board to place ships
-        char **m_board;
+        string **m_board;
         //board to keep track player's moves
-        char **m_playerViewBoard;
+        string **m_playerViewBoard;
+        int m_shipNums;
 
     public:
-        Board();
+        Board(int shipNums);
 
         //print m_board
         void printBoard();
@@ -23,10 +24,10 @@ class Board {
         void printPlayerViewBoard();
 
         //return a character of a location on m_board
-        char getLocation(int row, int col);
+        string getLocation(int row, int col);
 
         //set a character on a location on m_board
-        void setLocation(int row, int col, char newChar);
+        void setLocation(int row, int col, string newChar);
 
         //convert character coordinate into an interger coordinate
         int convertCharToInt(char character);
