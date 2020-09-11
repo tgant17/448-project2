@@ -7,3 +7,4 @@ EECS Team 6 commits to the following in order to successfully complete our proje
 Team Members:
 Jack Gould
 Thang
+Logan Michels
