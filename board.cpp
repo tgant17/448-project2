@@ -1,9 +1,11 @@
 #include "board.h"
 #include <iostream>
 #include <string>
+#include <stdexcept>
 
 Board::Board(int shipNums){
     m_shipNums = shipNums;
+    
     //create m_board
     m_board = new string*[10];
     for (int i = 0; i < 10; i++){
@@ -169,7 +171,7 @@ bool Board::setShipHorizontally(int row, char colStart, char colEnd){
         return true;
     }
     else{
-        return false;
+        throw(runtime_error("Error: Please check for ship information"));
     }
     
 }
@@ -184,7 +186,20 @@ bool Board::setShipVertically(char col, int rowStart, int rowEnd){
         return true;
     }
     else{
-        return false;
+        throw(runtime_error("Error: Please check for ship information"));
+    }
+}
+
+//Set a ship
+bool Board::setShip(char orientation, int rowStart, char colStart, int rowEnd, char colEnd){
+    if(orientation == 'h'){
+        setShipHorizontally(rowStart,colStart, colEnd);
+    }
+    else if(orientation == 'v'){
+        setShipVertically(colStart, rowStart, rowEnd);
+    }
+    else{
+        throw(runtime_error("Orientation should be v or h"));
     }
 }
 

@@ -19,7 +19,7 @@ public:
   //show the place that user shoot
   bool GettingShot(string guess);
   //show the place that user getting shoot
-  board* getBoard() const;
+  Board* getBoard() const;
   //show the player's board include guess place, hit place, have been hit place
   ~Player();
   //destructor

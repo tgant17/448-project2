@@ -3,6 +3,7 @@
 #define BOARD_H
 #include <iostream>
 #include <string>
+#include "Battleship.h"
 
 using namespace std;
 
@@ -12,6 +13,7 @@ class Board {
         string **m_board;
         //board to keep track player's moves
         string **m_playerViewBoard;
+        Battleship* ships;
         int m_shipNums;
 
     public:
@@ -52,6 +54,9 @@ class Board {
 
         //Place a vertical ship on the board
         bool setShipVertically(char col, int rowStart, int rowEnd);
+
+        //Place a Ship
+        bool setShip(char orientation, int rowStart, char colStart, int rowEnd, char colEnd);
 
         //return true if player hit another player's ship and update player's view board
         bool Hit(Board otherPlayerBoard, int row, char col);
