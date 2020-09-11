@@ -2,28 +2,36 @@
 #include <iostream>
 #include <string>
 
-Board::Board(){
-    m_board = new char*[10];
+Board::Board(int shipNums){
+    m_shipNums = shipNums;
+    //create m_board
+    m_board = new string*[10];
     for (int i = 0; i < 10; i++){
-        m_board[i] = new char[10];
+        m_board[i] = new string[10];
     }
     
-    char rowLabel = '0';
+    for (int i = 1; i < 10; i++){
+        for(int j = 1; j < 10; j++){
+                m_board[i][j] = "-";
+            }
+        }
+    //create m_playerViewBoard
+    m_playerViewBoard = new string*[10];
     for (int i = 0; i < 10; i++){
-        for(int j = 0; j < 10; j++){
-            if(j == 0){
-                m_board[i][j] = rowLabel;
-                rowLabel++;
-            }
-            else{
-                m_board[i][j] = '-';
-            }
-            
+        m_playerViewBoard[i] = new string[10];
+    }
+
+    
+    for (int i = 1; i < 10; i++){
+        for(int j = 1; j < 10; j++){
+                m_playerViewBoard[i][j] = "-";   
         }
     }
 }
 
+//print m_board
 void Board::printBoard(){
+    cout<<"My Board"<<endl;
     cout<< " "<<"\t";
     char colLabel = 'A';
     for(char i = colLabel; i <= 'I'; i++){
@@ -31,15 +39,59 @@ void Board::printBoard(){
     }
     cout<<endl;
     cout<<endl;
+    int rowLabel = 1;
     for (int i = 1; i < 10; i++){
         for(int j = 0; j < 10; j++){
-            cout<<m_board[i][j]<<"\t";    
+            if(j == 0){
+                cout<< rowLabel << "\t";
+                rowLabel++;
+            }
+            else{
+                cout<<m_board[i][j]<<"\t";
+            }        
         }
         cout<<endl;
     }
     cout<<endl;
 }
 
+//print m_playerViewBoard
+void Board:: printPlayerViewBoard(){
+    cout<<"Other player's board"<<endl;
+    cout<< " "<<"\t";
+    char colLabel = 'A';
+    for(char i = colLabel; i <= 'I'; i++){
+        cout<< i << "\t";
+    }
+    cout<<endl;
+    cout<<endl;
+    int rowLabel = 1;
+    for (int i = 1; i < 10; i++){
+        for(int j = 0; j < 10; j++){
+            if(j == 0){
+                cout<< rowLabel <<"\t";
+                rowLabel++;
+            }
+            else{
+                cout<<m_playerViewBoard[i][j]<<"\t";
+            }
+        }
+        cout<<endl;
+    }
+    cout<<endl;
+}
+
+//return a character of a location on m_board
+string Board:: getLocation(int row, int col){
+    return m_board[row][col];
+}
+
+//set a location of m_board to a character
+void Board:: setLocation(int row, int col, string newChar){
+    m_board[row][col] = newChar;
+}
+
+//convert character column into integer
 int Board::convertCharToInt(char character){
     switch (character)
     {
@@ -84,7 +136,7 @@ bool Board::isValidSize(int shipStart, int shipEnd){
 //check if the position is occupied horizontally
 bool Board::isOccupiedHorizontally(int p, int shipStart, int shipEnd){
     for(int i = shipStart; i <= shipEnd; i++){
-        if(m_board[p][i] == 'S'){
+        if(m_board[p][i] == "S"){
             return true;
         }
     }
@@ -94,7 +146,7 @@ bool Board::isOccupiedHorizontally(int p, int shipStart, int shipEnd){
 //check if the postion is occupied vertically
 bool Board::isOccupiedVertically(int p, int shipStart, int shipEnd){
     for(int i = shipStart; i <= shipEnd; i++){
-        if(m_board[i][p] == 'S'){
+        if(m_board[i][p] == "S"){
             return true;
         }
     }
@@ -112,7 +164,7 @@ bool Board::setShipHorizontally(int row, char colStart, char colEnd){
     int shipEnd = convertCharToInt(colEnd);
     if(isValidShip(row, shipStart, shipEnd) && !isOccupiedHorizontally(row, colStart, colEnd)){
         for(int i = shipStart; i <= shipEnd; i++){
-            m_board[row][i] = 'S';
+            m_board[row][i] = "S";
         }
         return true;
     }
@@ -127,29 +179,38 @@ bool Board::setShipVertically(char col, int rowStart, int rowEnd){
     int intCol = convertCharToInt(col);
     if(isValidShip(intCol, rowStart, rowEnd) && !isOccupiedVertically(intCol, rowStart, rowEnd)){
         for(int i = rowStart; i <= rowEnd; i++){
-            m_board[i][intCol] = 'S';
+            m_board[i][intCol] = "S";
         }
         return true;
     }
     else{
         return false;
     }
-    
 }
 
-//check if player hit a occupied tile
-bool Board::Hit(char **board, int row, char col){
-    int integerCol = convertCharToInt(col);
-    if(board[row][integerCol] == 'S'){
-        board[row][integerCol] = '-';
+//return true if player hit a board and updatge m_playerViewBoard
+bool Board::Hit(Board otherPlayerBoard, int row, char col){
+    int intCol = convertCharToInt(col);
+    if(otherPlayerBoard.getLocation(row, intCol) == "S"){
+        otherPlayerBoard.setLocation(row, intCol, "-");
+        m_playerViewBoard[row][intCol] = "H";
         return true;
+    }
+    else{
+        m_playerViewBoard[row][intCol] = "M";
     }
     return false;
 }
 
+//destructor, deallocatte m_board and m_playerViewBoard
 Board:: ~Board(){
     for(int i = 0; i < 10; i++){
     delete [] m_board[i];
   }
   delete[] m_board;
+
+  for(int i = 0; i < 10; i++){
+    delete [] m_playerViewBoard[i];
+  }
+  delete[] m_playerViewBoard;
 }

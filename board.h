@@ -8,13 +8,26 @@ using namespace std;
 
 class Board {
     private:
-        char **m_board;
+        //board to place ships
+        string **m_board;
+        //board to keep track player's moves
+        string **m_playerViewBoard;
+        int m_shipNums;
 
     public:
-        Board();
+        Board(int shipNums);
 
-        //print the board
+        //print m_board
         void printBoard();
+
+        //print m_playerViewBoard
+        void printPlayerViewBoard();
+
+        //return a character of a location on m_board
+        string getLocation(int row, int col);
+
+        //set a character on a location on m_board
+        void setLocation(int row, int col, string newChar);
 
         //convert character coordinate into an interger coordinate
         int convertCharToInt(char character);
@@ -40,8 +53,8 @@ class Board {
         //Place a vertical ship on the board
         bool setShipVertically(char col, int rowStart, int rowEnd);
 
-        //return true if player hit another player's ship
-        bool Hit(char **board, int row, char col);
+        //return true if player hit another player's ship and update player's view board
+        bool Hit(Board otherPlayerBoard, int row, char col);
 
         ~Board();
 };
