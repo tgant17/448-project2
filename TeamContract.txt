@@ -1,0 +1,8 @@
+EECS Team 6 commits to the following in order to successfully complete our project 1.
+
+  Maintain active communication in channels. 
+  Contribute to finalization of project in the form of integrating classes, testing code for edge cases.
+  Meet deadlines for project code, peer reviews, presentation, etc
+  
+Team Members:
+Jack Gould
