@@ -190,7 +190,7 @@ void Executive::run()
             player1->printMyMovesHistory();
             cout<<"Enter a coordinator to send a missle (i.e A1):";
             cin>>col>>row;
-            
+            try{
                 if(player1->Attack(player2->getBoard(), row, col)){
                     cout<<"It's a hit!\n";
                     if(player2->isLost()){
@@ -203,7 +203,11 @@ void Executive::run()
                 else{
                         cout<<"It's a miss, try again next turn\n";
                     }
-                playerToggle = 2;    
+                playerToggle = 2;
+            }
+            catch(runtime_error& e){
+                cout<<e.what()<<endl;
+            }       
         }
         else
         {

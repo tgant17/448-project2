@@ -24,11 +24,16 @@ bool Player::setShip(char orientation, string shipType, int rowStart, char colSt
 }
 
 bool Player::Attack(Board*otherPlayerBoard, int row, char col){
-    if(m_Board->Hit(otherPlayerBoard, row, col)){
-        return true;
+    try{
+      if(m_Board->Hit(otherPlayerBoard, row, col)){
+          return true;
+      }
+      else{
+          return false;
+      }
     }
-    else{
-        return false;
+    catch(runtime_error& e){
+      throw(runtime_error(e.what()));
     }
   }
 

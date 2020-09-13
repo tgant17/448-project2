@@ -241,19 +241,25 @@ void Board:: updateShip(string shipType){
 //return true if player hit a board and updatge m_playerViewBoard
 bool Board::Hit(Board* otherPlayerBoard, int row, char col){
     int intCol = convertCharToInt(col);
-    //check if player has already made this move
-        //check if player has missed the ship
-        if(otherPlayerBoard->getLocation(row, intCol) == "-"){
-            m_playerViewBoard[row][intCol] = "M";
-            return false;
+        //check if player's move is valid
+        if(row <= 0 || row > 9 || intCol <= 0 || row >9 || m_playerViewBoard[row][intCol] == "M" || m_playerViewBoard[row][intCol] == "H"){
+            throw(runtime_error("Error: Your attack is off the board or you have made this move. Please try again"));
         }
         else{
+            //check if player has missed the ship
+            if(otherPlayerBoard->getLocation(row, intCol) == "-"){
+                m_playerViewBoard[row][intCol] = "M";
+                return false;
+            }
+            else{
             //check which ship is being attacked
-            otherPlayerBoard->updateShip(otherPlayerBoard->getLocation(row, intCol));
-            otherPlayerBoard->setLocation(row, intCol, "X");
-            m_playerViewBoard[row][intCol] = "H";
-            return true;
-        } 
+                otherPlayerBoard->updateShip(otherPlayerBoard->getLocation(row, intCol));
+                otherPlayerBoard->setLocation(row, intCol, "X");
+                m_playerViewBoard[row][intCol] = "H";
+                return true;
+            } 
+        }
+        
 }
 
 int Board::getShipNums(){
