@@ -10,6 +10,8 @@
 //Start your program.
 #include "executive.h"
 #include <stdexcept>
+#include <limits>
+using namespace std;
 Executive::Executive()//This is how we will be defining the constructor needed to connect all of the files in the lab
 {
     
@@ -17,213 +19,198 @@ Executive::Executive()//This is how we will be defining the constructor needed t
 
 void Executive::run()
 {
-    char playAgain = '\0';
+    // char playAgain = '\0';
     int userChoice=0;
     int playerToggle=1;
-    int rowNumber = 0;
-    char columnNumber = 0;
-    char leftBoundColumn = '\0';
-    char rightBoundColumn = '\0';
-    char horizontalOrVertical = '\0';
+    int rowStart = 0;
+    char colStart = '0';
+    int rowEnd = 0;
+    char colEnd = '0';
+    char orientation = '\0';
+    string shipType = "";
 
+    cout<<"Welcome to Team 6's Battleship Game!\n";
+    cout<<"This is a two-player game.\n\n";
+    cout<<"How many battleships will each team be starting with?\n";
+    cout<<"Please type out your choice and hit enter:\n\n";
+    cout<<"1 battleship (for each player): '1'\n";
+    cout<<"2 battleships:                  '2'\n";
+    cout<<"3 battleships:                  '3'\n";
+    cout<<"4 battleships:                  '4'\n";
+    cout<<"5 battleships:                  '5'\n";
+    
+    //Input validation, loop breaks when user input correctly
+    while(1){
+        cout<<"Your choice: ";
+        if(cin>>userChoice){
+            if(userChoice >= 1 && userChoice <= 5){
+                break;
+            }
+            else{
+                cout<<"Your choice should be in range of 1 to 5"<<endl;
+            }
+        }
+        else{
+            cout << "Please enter a valid integer" << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+    }
+    
+    cout<<"Each player has "<<userChoice<<" battle ships"<<endl;
+    // Board m_Board1(userChoice);//Constructing two boards for the game
+    // Board m_Board2(userChoice);
+    player1 = new Player(1,userChoice);
+    player2 = new Player(2,userChoice);
 
-    std::cout<<"Welcome to Team 6's Battleship Game!\n";
-    std::cout<<"This is a two-player game.\n\n";
-    std::cout<<"How many battleships will each team be starting with?\n";
-    std::cout<<"Please type out your choice and hit enter:\n\n";
-    std::cout<<"1 battleship (for each player): '1'\n";
-    std::cout<<"2 battleships:                  '2'\n";
-    std::cout<<"3 battleships:                  '3'\n";
-    std::cout<<"4 battleships:                  '4'\n";
-    std::cout<<"5 battleships:                  '5'\n";
-    std::cout<<"Your choice: ";
-    std::cin>>userChoice;
+    cout<<endl;
+    //Set up phase
 
-    Board m_Board1(userChoice);//Constructing two boards for the game
-    Board m_Board2(userChoice);
-
-    std::cout<<std::endl;
-
-
-    for(int i=1;i<=userChoice;i++)
+    //Player1 set ships
+    int i = 1;
+    cout<<"----------------------------------------------------------------------------"<<endl;
+    while(i <= userChoice)
     {
         //Players put ships on their boards
         if(playerToggle == 1)
         {
-            std::cout<<"Player "<<playerToggle<<", place your Battleship No. "<<userChoice<<" onto your board.\n";
-            std::cout<<"Either type 'H' for Horizontal or 'V' for Vertical: ";
-            std::cin>>horizontalOrVertical;
-            if(horizontalOrVertical='H')
-            {
-                std::cout<<"Enter Row Number: ";
-                std::cin>>rowNumber;
-                std::cout<<"Enter Column Range:\n";
-                std::cout<<"Left-Bound: ";
-                std::cin>>leftBoundColumn;
-                std::cout<<"Right-Bound: ";
-                std::cin>>rightBoundColumn;
-                std::cout<<std::endl;
-                
-                //Board Method called to install battleship
-                //Battleship method called to deal with battleships taking up multiple spaces
-
-                m_Board1.setShipHorizontally(rowNumber,leftBoundColumn,rightBoundColumn);
+            shipType = to_string(i);
+            cout<<"Player "<<playerToggle<<", place your 1X"<<i<<" battleship onto your board.\n";
+            while(1){
+                cout<<"Enter orientation (h for horizontal, v for vertical): ";
+                if(cin>>orientation){
+                    if(orientation == 'h' || orientation == 'v'){
+                        break;
+                    }
+                    else{
+                        cout<<"Please enter h or v for orientation"<<endl;
+                    }
+                }
+                else{
+                    cout << "Please enter a valid character" << endl;
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                }
             }
-            else
-            {
-                std::cout<<"Enter Column Number: ";
-                std::cin>>rowNumber;
-                std::cout<<"Enter Row Range:\n";
-                std::cout<<"Upper-Bound: ";
-                std::cin>>leftBoundColumn;
-                std::cout<<"Lower-Bound: ";
-                std::cin>>rightBoundColumn;
-                std::cout<<std::endl;
-                
-                //Board Method called to install battleship
-                //Battleship method called to deal with battleships taking up multiple spaces
-
-                m_Board1.setShipVertically(rowNumber,leftBoundColumn,rightBoundColumn);
+            cout<<"Enter ship "<< i <<" starting position (i.e A1): ";
+            cin>>colStart>>rowStart;
+            cout<<"Enter ship "<< i <<" ending position (i.e A3): ";
+            cin>>colEnd>>rowEnd;
+            cout<<endl;
+            if(player1->setShip(orientation, shipType, rowStart, colStart, rowEnd, colEnd)){
+                i++;
             }
-            playerToggle = 2;
-        }
-        else
-        {
-            std::cout<<"Player "<<playerToggle<<", place your Battleship No. "<<userChoice<<" onto your board.\n";
-            std::cout<<"Either type 'H' for Horizontal or 'V' for Vertical: ";
-            std::cin>>horizontalOrVertical;
-            if(horizontalOrVertical='H')
-            {
-                std::cout<<"Enter Row Number: ";
-                std::cin>>rowNumber;
-                std::cout<<"Enter Column Range:\n";
-                std::cout<<"Left-Bound: ";
-                std::cin>>leftBoundColumn;
-                std::cout<<"Right-Bound: ";
-                std::cin>>rightBoundColumn;
-                std::cout<<std::endl;
-                
-                //Board Method called to install battleship
-                //Battleship method called to deal with battleships taking up multiple spaces
-
-                m_Board2.setShipHorizontally(rowNumber,leftBoundColumn,rightBoundColumn);
-            }
-            else
-            {
-                std::cout<<"Enter Column Number: ";
-                std::cin>>rowNumber;
-                std::cout<<"Enter Row Range:\n";
-                std::cout<<"Upper-Bound: ";
-                std::cin>>leftBoundColumn;
-                std::cout<<"Lower-Bound: ";
-                std::cin>>rightBoundColumn;
-                std::cout<<std::endl;
-                
-                //Board Method called to install battleship
-                //Battleship method called to deal with battleships taking up multiple spaces
-
-                m_Board2.setShipVertically(rowNumber,leftBoundColumn,rightBoundColumn);
-            }
-            playerToggle = 1;
+            else{
+                cout<<"Invalid Ship please check for orientation or size of the ship"<<endl;
+            }     
         }        
     }
-
-    std::cout<<"Now that everyone has placed down their battleships, we can begin the game.\n";
-
+    system("cls");
+    playerToggle = 2;
+    //Player2 set ships
+    int j = 1;
+    cout<<"----------------------------------------------------------------------------"<<endl;
+    while(j <= userChoice)
+    {
+        //Players put ships on their boards
+        if(playerToggle == 2)
+        {
+            shipType = to_string(j);
+            cout<<"Player "<<playerToggle<<", place your 1x"<<j<<" battleship onto your board.\n";
+            while(1){
+                cout<<"Enter orientation (h for horizontal, v for vertical): ";
+                if(cin>>orientation){
+                    if(orientation == 'h' || orientation == 'v'){
+                        break;
+                    }
+                    else{
+                        cout<<"Please enter h or v for orientation"<<endl;
+                    }
+                }
+                else{
+                    cout << "Please enter a valid character" << endl;
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                }
+            }
+            
+            cout<<"Enter ship "<< j <<" starting position (i.e A1): ";
+            cin>>colStart>>rowStart;
+            cout<<"Enter ship "<< j <<" ending position (i.e A3): ";
+            cin>>colEnd>>rowEnd;
+            cout<<endl;
+            if(player2->setShip(orientation, shipType, rowStart, colStart, rowEnd, colEnd)){
+                j++;
+            }
+            else{
+                 cout<<"Invalid Ship please check for orientation or size of the ship"<<endl;
+            }
+        }        
+    }
+    system("cls");
+    playerToggle = 1;
+    cout<<"----------------------------------------------------------------------------"<<endl;
+    cout<<"Now that everyone has placed down their battleships, we can begin the game.\n";
+    //Battle phase
+    int row;
+    char col;
     while(1)
     {
         //Player toggle for game turns
         if(playerToggle == 1)
         {
-            std::cout<<"Player "<<playerToggle<<", select row and column to send a missle.\n";
-            m_Board1.printBoard();
-            std::cout<<"Enter Row Number: ";
-            std::cin>>rowNumber;
-            std::cout<<"Enter Column Number: ";
-            std::cin>>columnNumber;
-
-            if(m_Board1.Hit(m_Board2, rowNumber, columnNumber))
-            {
-                std::cout<<"It's a hit!\n";
-                /*if(the targeted battleship is sunk completely)
-                {
-                    std::cout<<"It's a hit! Player "<<playerToggle<<" has sunk a battleship!\n";
-                    if(all ships on that player's board are sunk)
-                    {
-                        std::cout<<"Player 1 has sunk all of Player 2's battleships, so Player 1 wins!!\n"
-                        std::cout<<"Play again? (y/n)";
-                        std::cin>>playAgain;
-                        if(playAgain == y)
-                        {
-                            run();
-                            break;
-                        }
-                        else
-                        {
-                            std::cout<<"Thanks for playing!\n";
-                            break;
-                        }
+            cout<<"Player"<<playerToggle<<"'s remaining ships: "<<player1->getNumsOfRemainingShip()<<endl;
+            cout<<"Player"<<playerToggle<<"'s current board"<<endl;
+            player1->printMyCurrentBoard();
+            cout<<"Player"<<playerToggle<<"'s move history"<<endl;
+            player1->printMyMovesHistory();
+            cout<<"Enter a coordinator to send a missle (i.e A1):";
+            cin>>col>>row;
+            
+                if(player1->Attack(player2->getBoard(), row, col)){
+                    cout<<"It's a hit!\n";
+                    if(player2->isLost()){
+                        system("cls");
+                        cout<<"Player"<<playerToggle<<" wins"<<endl;
+                        player2->printMyCurrentBoard();
+                        break;
                     }
                 }
-                else
-                {
-                    std::cout<<"It's a hit! Try to hit that ship again on your next turn!\n";
-                }*/
-            }
-            else
-            {
-                std::cout<<"It's a miss, try again next turn\n";
-            }
-            playerToggle = 2;
+                else{
+                        cout<<"It's a miss, try again next turn\n";
+                    }
+                playerToggle = 2;    
         }
         else
         {
-            std::cout<<"Player "<<playerToggle<<", select row and column to send a missle.\n";
-            m_Board1.printBoard();
-            std::cout<<"Enter Row Number: ";
-            std::cin>>rowNumber;
-            std::cout<<"Enter Column Number: ";
-            std::cin>>columnNumber;
+            cout<<"Player"<<playerToggle<<"'s remaining ships: "<<player2->getNumsOfRemainingShip()<<endl;
+            cout<<"Player"<<playerToggle<<"'s current board"<<endl;
+            player2->printMyCurrentBoard();
+            cout<<"Player"<<playerToggle<<"'s move history"<<endl;
+            player2->printMyMovesHistory();
+            cout<<"Enter a coordinator to send a missle (i.e A1):";
+            cin>>col>>row;
 
-            if(m_Board2.Hit(m_Board1, rowNumber, columnNumber))
+            if(player2->Attack(player1->getBoard(), row, col))
             {
-                std::cout<<"It's a hit!\n";
-                /*if(the targeted battleship is sunk completely)
-                {
-                    std::cout<<"It's a hit! Player "<<playerToggle<<" has sunk a battleship!\n";
-                    if(all ships on that player's board are sunk)
-                    {
-                        std::cout<<"Player 2 has sunk all of Player 1's battleships, so Player 2 wins!!\n"
-                        std::cout<<"Play again? (y/n)";
-                        std::cin>>playAgain;
-                        if(playAgain == y)
-                        {
-                            run();
-                            break;
-                        }
-                        else
-                        {
-                            std::cout<<"Thanks for playing!\n";
-                            break;
-                        }
-                    }
+                cout<<"It's a hit!\n";
+                if(player1->isLost()){
+                    system("cls");
+                    cout<<"Player"<<playerToggle<<" wins"<<endl;
+                    player1->printMyCurrentBoard();
+                    break;
                 }
-                else
-                {
-                    std::cout<<"It's a hit! Try to hit that ship again on your next turn!\n";
-                }*/
             }
             else
             {
-                std::cout<<"It's a miss, try again next turn.\n";
+                cout<<"It's a miss, try again next turn\n";
             }
             playerToggle = 1;
         }
-
-        
     }  
 }
 Executive::~Executive()
 {
- 
+ delete player1;
+ delete player2;
 }

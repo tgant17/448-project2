@@ -1,7 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 #include <iostream>
-
+#include <string>
 #include "board.h"
 
 using namespace std;
@@ -9,23 +9,36 @@ using namespace std;
 class Player
 {
 public:
-  Player(int ShipNums);
+  Player(int playerId, int ShipNums);
   //constructor
-  void setGuessPlace(string guess);
-  //set the user guess place
-  string getGuessPlace() const;
-  //get the user guess place
-  void shooting(bool hit, string guess);
-  //show the place that user shoot
-  bool GettingShot(string guess);
-  //show the place that user getting shoot
+  bool setShip(char orientation, string shipType, int rowStart, char colStart, int rowEnd, char colEnd);
+
+  //return true if attack opponent's ship
+  bool Attack(Board*otherPlayerBoard, int row, char col);
+
+  //call printBoard() in board.h
+  void printMyCurrentBoard();
+
+  //call printPlayerViewBoard in board.h
+  void printMyMovesHistory();
+
+  //return true if remainningShip == 0
+  bool isLost();
+
+  //return m_playerId
+  int getPlayerID();
+
+  //return remainingShip
+  int getNumsOfRemainingShip();
+
   Board* getBoard() const;
   //show the player's board include guess place, hit place, have been hit place
   ~Player();
   //destructor
 private:
   int numofships;
-  Board* m_Board =nullptr;
+  int m_playerId;
+  Board* m_Board;
   string historyguess;
 };
 #endif

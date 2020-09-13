@@ -1,3 +1,13 @@
+/* -----------------------------------------------------------------------------
+ *
+ * File Name:  board.cpp
+ * Author: Thang Minh Le
+ * Assignment:   EECS-448 Project 1
+ * Description:  Defines all methods established in the board.h file
+ * Date: 9-7-2020
+ *
+ ---------------------------------------------------------------------------- */
+
 #include "board.h"
 #include <iostream>
 #include <string>
@@ -5,7 +15,12 @@
 
 Board::Board(int shipNums){
     m_shipNums = shipNums;
-    
+    remainingShip = shipNums;
+    ships = new Battleship*[m_shipNums];
+    for(int i = 0; i < m_shipNums; i++){
+        ships[i] = new Battleship(i + 1);
+    }
+
     //create m_board
     m_board = new string*[10];
     for (int i = 0; i < 10; i++){
@@ -33,7 +48,6 @@ Board::Board(int shipNums){
 
 //print m_board
 void Board::printBoard(){
-    cout<<"My Board"<<endl;
     cout<< " "<<"\t";
     char colLabel = 'A';
     for(char i = colLabel; i <= 'I'; i++){
@@ -59,7 +73,6 @@ void Board::printBoard(){
 
 //print m_playerViewBoard
 void Board:: printPlayerViewBoard(){
-    cout<<"Other player's board"<<endl;
     cout<< " "<<"\t";
     char colLabel = 'A';
     for(char i = colLabel; i <= 'I'; i++){
@@ -86,6 +99,11 @@ void Board:: printPlayerViewBoard(){
 //return a character of a location on m_board
 string Board:: getLocation(int row, int col){
     return m_board[row][col];
+}
+
+string Board:: getHistoryMove(int row, char col){
+    int intCol = convertCharToInt(col);
+    return m_playerViewBoard[row][intCol];
 }
 
 //set a location of m_board to a character
@@ -131,14 +149,20 @@ bool Board::isOffArray(int p, int shipStart, int shipEnd){
 }
 
 //check if the ship size is valid
-bool Board::isValidSize(int shipStart, int shipEnd){
-    return (shipStart <= shipEnd);
+bool Board::isValidSize(string shipType, int shipStart, int shipEnd){
+    int size = stoi(shipType);
+    if(shipEnd - shipStart == size - 1){
+        return true;
+    }
+    else{
+        return false;
+    }
 }
 
 //check if the position is occupied horizontally
 bool Board::isOccupiedHorizontally(int p, int shipStart, int shipEnd){
     for(int i = shipStart; i <= shipEnd; i++){
-        if(m_board[p][i] == "S"){
+        if(m_board[p][i] != "-"){
             return true;
         }
     }
@@ -148,73 +172,96 @@ bool Board::isOccupiedHorizontally(int p, int shipStart, int shipEnd){
 //check if the postion is occupied vertically
 bool Board::isOccupiedVertically(int p, int shipStart, int shipEnd){
     for(int i = shipStart; i <= shipEnd; i++){
-        if(m_board[i][p] == "S"){
+        if(m_board[i][p] != "-"){
             return true;
         }
     }
     return false;    
 }
 //check if it is valid to set the Ship
-bool Board::isValidShip(int p, int shipStart, int shipEnd){
-    return (!isOffArray(p, shipStart, shipEnd) && isValidSize(shipStart, shipEnd));
+bool Board::isValidShip(string shipType, int p, int shipStart, int shipEnd){
+    return (!isOffArray(p, shipStart, shipEnd) && isValidSize(shipType, shipStart, shipEnd));
 }
 
 
 //Set a ship horizontally on the board
-bool Board::setShipHorizontally(int row, char colStart, char colEnd){
+bool Board::setShipHorizontally(string shipType, int row, char colStart, char colEnd){
     int shipStart = convertCharToInt(colStart);
     int shipEnd = convertCharToInt(colEnd);
-    if(isValidShip(row, shipStart, shipEnd) && !isOccupiedHorizontally(row, colStart, colEnd)){
+    if(isValidShip(shipType, row, shipStart, shipEnd) && !isOccupiedHorizontally(row, shipStart, shipEnd)){
         for(int i = shipStart; i <= shipEnd; i++){
-            m_board[row][i] = "S";
+            m_board[row][i] = shipType;
         }
         return true;
     }
     else{
-        throw(runtime_error("Error: Please check for ship information"));
+       return false;
     }
     
 }
 
 //Set a ship vertically on the board
-bool Board::setShipVertically(char col, int rowStart, int rowEnd){
+bool Board::setShipVertically(string shipType, char col, int rowStart, int rowEnd){
     int intCol = convertCharToInt(col);
-    if(isValidShip(intCol, rowStart, rowEnd) && !isOccupiedVertically(intCol, rowStart, rowEnd)){
+    if(isValidShip(shipType, intCol, rowStart, rowEnd) && !isOccupiedVertically(intCol, rowStart, rowEnd)){
         for(int i = rowStart; i <= rowEnd; i++){
-            m_board[i][intCol] = "S";
+            m_board[i][intCol] = shipType;
         }
         return true;
     }
     else{
-        throw(runtime_error("Error: Please check for ship information"));
+       return false;
     }
 }
 
 //Set a ship
-bool Board::setShip(char orientation, int rowStart, char colStart, int rowEnd, char colEnd){
+bool Board::setShip(char orientation, string shipType, int rowStart, char colStart, int rowEnd, char colEnd){
     if(orientation == 'h'){
-        setShipHorizontally(rowStart,colStart, colEnd);
+        return (rowStart == rowEnd && setShipHorizontally(shipType, rowStart,colStart, colEnd));
     }
     else if(orientation == 'v'){
-        setShipVertically(colStart, rowStart, rowEnd);
+        return (colStart == colEnd && setShipVertically(shipType, colStart, rowStart, rowEnd));
     }
     else{
-        throw(runtime_error("Orientation should be v or h"));
+       return false;
+    }
+}
+
+void Board:: updateShip(string shipType){
+    for(int i = 0; i < m_shipNums; i++){
+        if(ships[i]->getShipType() == shipType){
+            ships[i]->isAttacked();
+            if(ships[i]->isDestroyed()){
+                remainingShip--;
+            }
+        }
     }
 }
 
 //return true if player hit a board and updatge m_playerViewBoard
-bool Board::Hit(Board otherPlayerBoard, int row, char col){
+bool Board::Hit(Board* otherPlayerBoard, int row, char col){
     int intCol = convertCharToInt(col);
-    if(otherPlayerBoard.getLocation(row, intCol) == "S"){
-        otherPlayerBoard.setLocation(row, intCol, "-");
-        m_playerViewBoard[row][intCol] = "H";
-        return true;
-    }
-    else{
-        m_playerViewBoard[row][intCol] = "M";
-    }
-    return false;
+    //check if player has already made this move
+        //check if player has missed the ship
+        if(otherPlayerBoard->getLocation(row, intCol) == "-"){
+            m_playerViewBoard[row][intCol] = "M";
+            return false;
+        }
+        else{
+            //check which ship is being attacked
+            otherPlayerBoard->updateShip(otherPlayerBoard->getLocation(row, intCol));
+            otherPlayerBoard->setLocation(row, intCol, "X");
+            m_playerViewBoard[row][intCol] = "H";
+            return true;
+        } 
+}
+
+int Board::getShipNums(){
+    return remainingShip;
+}
+
+bool Board:: isLost(){
+    return(remainingShip==0);
 }
 
 //destructor, deallocatte m_board and m_playerViewBoard

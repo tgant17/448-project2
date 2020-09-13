@@ -1,44 +1,54 @@
 #include "player.h"
+#include <string>
+#include <stdexcept>
 
-Player::Player(int ShipNums)
+using namespace std;
+
+Player::Player(int playerId, int ShipNums)
 {
+  m_playerId = playerId;
   m_Board=new Board(ShipNums);
-  numofships=ShipNums;
+}
+
+bool Player::setShip(char orientation, string shipType, int rowStart, char colStart, int rowEnd, char colEnd){
+   return (m_Board->setShip(orientation, shipType, rowStart, colStart, rowEnd, colEnd));
+}
+
+bool Player::Attack(Board*otherPlayerBoard, int row, char col){
+    if(m_Board->Hit(otherPlayerBoard, row, col)){
+        return true;
+    }
+    else{
+        return false;
+    }
+  }
+
+void Player::printMyCurrentBoard(){
+  m_Board->printBoard();
+}
+
+void Player::printMyMovesHistory(){
+  m_Board->printPlayerViewBoard();
+}
+
+Board* Player::getBoard() const
+{
+  return m_Board;
+}
+
+bool Player::isLost(){
+  return (m_Board->isLost());
+}
+
+int Player::getPlayerID(){
+  return m_playerId;
+}
+
+int Player::getNumsOfRemainingShip(){
+  return (m_Board->getShipNums());
 }
 
 Player::~Player()
 {
-  delete m_board;
-}
-
-void Player::setGuessPlace(string UserGuess)//set the place have been guess
-{
-  historyguess=UserGuess;
-}
-
-string Player::getGuessPlace() const//return the place have been guess
-{
-  return historyguess;
-}
-
-void Player::shooting(string UserGuess, bool Hit)//show the user shooting place in other player's board
-{
-    m_board->otherPlayerBoard(UserGuess, Hit);//update other player's board
-}
-
-bool Player::GettingShot(string UserGuess)//show the user getting shot place in user board
-{
-  if(m_board->isOffArray(UserGuess))
-  {
-    return (m_board->m_playerViewBoard(UserGuess));//update player's board
-  }
-  else
-  {
-    throw(runtime_error("Out of Boundary! Please try again.\n"))
-  }
-  //need throw runtime message if the guess not working
-}
-Board* Player::getBoard() const
-{
-  return m_board;
+  delete m_Board;
 }

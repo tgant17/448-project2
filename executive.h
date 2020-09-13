@@ -20,9 +20,10 @@
 class Executive
 {
 private:
-Board m_Board1;
-Board m_Board2;
-
+// Board m_Board1;
+// Board m_Board2;
+Player* player1;
+Player* player2;
 
 public:
     Executive();
