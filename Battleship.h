@@ -16,29 +16,44 @@ using namespace std;
 class Battleship
 {
   public:
-
-    //Constructor
     Battleship(int size);
+    /*Pre: none
+    Post: battleship constructor
+    Return: none
+    */
 
-    //Destructor
     ~Battleship();
+    /*Pre: none
+    Post: battleship destructor
+    Return: none
+    */
 
-    //return m_size
     int getSize();
+    /*Pre: the size can not exceed 5
+    Post: get the ship size
+    Return: return the ship size (m_size)
+    */
 
-    //Call this method after each landed hit to check for ships total destruction
     bool isDestroyed();
+    /*Pre: the ship is hit
+    Post: Call this method after each landed hit to check for ships total destruction
+    Return: return true if ship is sunk
+    */
 
-    //return shipType
     string getShipType();
-    
-    //Update m_status when the ship is being attacked
-    void isAttacked();
+    /*Pre: none
+    Post: get the ship type
+    Return: return shipType
+    */
 
-    
-    
+    void isAttacked();
+    /*Pre: the ship is hit
+    Post: update m_status when the ship is being attacked
+    Return: return the ship status
+    */
+
     //Call this method when ship is hit to update stored data.
-    //int shipSpot should be the ships position that is hit, starting from the left for horizontal ships, and top from vertical ships. Values 1 - size. 
+    //int shipSpot should be the ships position that is hit, starting from the left for horizontal ships, and top from vertical ships. Values 1 - size.
     // void landHit(int shipSpot);
 
   private:
