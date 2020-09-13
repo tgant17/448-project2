@@ -92,17 +92,30 @@ void Executive::run()
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 }
             }
-            cout<<"Enter ship "<< i <<" starting position (i.e A1): ";
-            cin>>colStart>>rowStart;
-            cout<<"Enter ship "<< i <<" ending position (i.e A3): ";
-            cin>>colEnd>>rowEnd;
-            cout<<endl;
-            if(player1->setShip(orientation, shipType, rowStart, colStart, rowEnd, colEnd)){
-                i++;
+            if(i == 1){
+                cout<<"Enter ship "<< i <<" position (i.e A1): ";
+                cin>>colStart>>rowStart;
+                if(player1->setShip(orientation, shipType, rowStart, colStart, rowStart, colStart)){
+                    i++;
+                }
+                else{
+                    cout<<"Invalid Ship please check for orientation or size of the ship"<<endl;
+                }    
             }
             else{
-                cout<<"Invalid Ship please check for orientation or size of the ship"<<endl;
-            }     
+                cout<<"Enter ship "<< i <<" starting position: ";
+                cin>>colStart>>rowStart;
+                cout<<"Enter ship "<< i <<" ending position: ";
+                cin>>colEnd>>rowEnd;
+                cout<<endl;
+                if(player1->setShip(orientation, shipType, rowStart, colStart, rowEnd, colEnd)){
+                    i++;
+                }
+                else{
+                    cout<<"Invalid Ship please check for orientation or size of the ship"<<endl;
+                }
+            }
+                 
         }        
     }
     system("cls");
@@ -133,17 +146,28 @@ void Executive::run()
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 }
             }
-            
-            cout<<"Enter ship "<< j <<" starting position (i.e A1): ";
-            cin>>colStart>>rowStart;
-            cout<<"Enter ship "<< j <<" ending position (i.e A3): ";
-            cin>>colEnd>>rowEnd;
-            cout<<endl;
-            if(player2->setShip(orientation, shipType, rowStart, colStart, rowEnd, colEnd)){
-                j++;
+            if(j == 1){
+                cout<<"Enter ship "<< j <<" position (i.e A1): ";
+                cin>>colStart>>rowStart;
+                if(player2->setShip(orientation, shipType, rowStart, colStart, rowStart, colStart)){
+                    j++;
+                }
+                else{
+                    cout<<"Invalid Ship please check for orientation or size of the ship"<<endl;
+                }    
             }
             else{
-                 cout<<"Invalid Ship please check for orientation or size of the ship"<<endl;
+                cout<<"Enter ship "<< j <<" starting position: ";
+                cin>>colStart>>rowStart;
+                cout<<"Enter ship "<< j <<" ending position: ";
+                cin>>colEnd>>rowEnd;
+                cout<<endl;
+                if(player2->setShip(orientation, shipType, rowStart, colStart, rowEnd, colEnd)){
+                    j++;
+                }
+                else{
+                    cout<<"Invalid Ship please check for orientation or size of the ship"<<endl;
+                }
             }
         }        
     }
