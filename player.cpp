@@ -1,3 +1,12 @@
+/* -----------------------------------------------------------------------------
+ *
+ * File Name:  player.cpp
+ * Author: Wenxuan Hu, Thang Minh Le
+ * Assignment:   EECS-448 Project 1
+ * Description: Defines all methods established in the player.h file
+ * Date: 9-13-2020
+ *
+ ---------------------------------------------------------------------------- */
 #include "player.h"
 #include <string>
 #include <stdexcept>
