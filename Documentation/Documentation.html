@@ -27,6 +27,73 @@
   <pre>
     int m_size: stores length of ship. Valid sizes are 1-5<br>    bool m_orientation: stores orientation of the ship(horizontal or vertical)<br>    std::string shipType: stores the shipType (size as a string)<br>    std::string m_status: stores the status of the ship as it gets hit</pre>
   </p>
+  
+  <h2>Class: Board</h2>
+<p>Constructor: Board(int shipNums)<br>
+  <pre>
+  	Preconditions: None<br>	Postconditions: New Board created<br>	Return: None</pre>
+  Destructor: ~Board()<br><pre>
+  	Preconditions: None
+    	Postconditions: Board destroyed, memory deallocated<br>	Return: None</pre>
+  void printBoard()<br>
+  <pre>
+    Preconditions: m_board is initialized<br>    Postconditions: prints m_board<br>    Return: none</pre>
+  int getShipNums()<br>
+  <pre>
+    Preconditions: User has chosen the number of ships for the board. <br>    Postconditions: gets number of ships for the board<br>    Return: returns int m_shipNums.</pre>
+  void printPlayerViewBoard()<br>
+  <pre>
+    Preconditions: m_playerViewBoard is initialized<br>    Postconditions: prints m_playerViewBoard<br>    Return: none</pre>
+  std::string getLocation(int row, int col)<br>
+  <pre>
+    Preconditions: row and col should be valid positions passed in<br>    Postconditions: get string at a location specified on the m_board<br>    Return: returns m_board[row][col]</pre>
+  std::string getHistoryMove(int row, char col)<br>
+  <pre>
+    Preconditions: row and col should be valid positions passed in<br>    Postconditions: get string at a location specified on m_playerViewBoard<br>    Return: returns m_playerViewBoard[row][col]</pre>
+  std::string setLocation(int row, int col, string newChar)<br>
+  <pre>
+    Preconditions: row and col should be valid positions passed in<br>    Postconditions: change the string stored at the specified location on m_board<br>    Return: none</pre>
+  int convertCharToInt(char character)<br>
+  <pre>
+    Preconditions: Input should be char from A-I. <br>    Postconditions: change a char to an int<br>    Return: an integer thar corresponds to the passed in character.</pre>
+  bool isOffArray(int p, int shipStart, int shipEnd)<br>
+  <pre>
+    Preconditions: User inputs the location of the ship.<br>    Postconditions: Check if the input location is not on the board<br>    Return: True if the input is not on the board, false otherwise.</pre>
+  bool isValidSize(string shipType, int shipStart, int shipEnd)<br>
+  <pre>
+    Preconditions: User inputs the location of the ship.<br>    Postconditions: Check if the size of the ship is valid.<br>    Return: True if the size is valid, false otherwise.</pre>
+  bool isOccupiedHorizontally(int p, int shipStart, int shipEnd)<br>
+  <pre>
+    Preconditions: User inputs the location of the ship.<br>    Postconditions: Check if any of the specified spots are occupied by anything other than "-".<br>    Return: True upon detection of any location different from "-", false otherwise.</pre>
+  bool isOccupiedVertically(int p, int shipStart, int shipEnd)<br>
+  <pre>
+    Preconditions: User inputs the location of the ship.<br>    Postconditions: Check if any of the specified spots are occupied by anything other than "-".<br>    Return: True upon detection of any location different from "-", false otherwise.</pre>
+  bool isValidShip(string shipType, int p, int shipStart, int shipEnd)<br>
+  <pre>
+    Preconditions: User inputs the location of the ship.<br>    Postconditions: Calls isOffArray and isValidSize.<br>    Return: True if isOffArray returns false and isValidSize returns true.</pre>
+  bool setShipHorizontally(string shipType, int row, char colStart, char colEnd)<br>
+  <pre>
+    Preconditions: User inputs the location and orientation of the ship.<br>    Postconditions: Places ship horizontally on the board.<br>    Return: True if the ship was set successfully, false otherwise.</pre>
+  bool setShipVertically(string shipType, char col, int rowStart, int rowEnd)<br>
+  <pre>
+    Preconditions: User inputs the location and orientation of the ship.<br>    Postconditions: Places ship vertically on the board.<br>    Return: True if the ship was set successfully, false otherwise.</pre>
+  bool setShip(char orientation, string shipType, int rowStart, char colStart, int rowEnd, char colEnd)<br>
+  <pre>
+    Preconditions: Location, orientation, and shipType stored.<br>    Postconditions: Calls setShipHorizontally or setShipVertically(h or v).<br>    Return: True if the ship was set successfully, false otherwise.</pre>
+  void updateShip(string shipType)<br>
+  <pre>
+    Preconditions: shipType stored.<br>    Postconditions: Updates status of ship if it got hit.<br>    Return: none.</pre>
+  bool isLost()<br>
+  <pre>
+    Preconditions: Game Started.<br>    Postconditions: checks if remainingShip == 0.<br>    Return: True if remainingShip == 0, false otherwise.</pre>
+  bool Hit(Board* otherPlayerBoard, int row, char col)<br>
+  <pre>
+    Preconditions: opponent's board and location known.<br>    Postconditions: Call updateShip if opponent's ship got hit.<br>    Return: True if the location on otherPlayerBoard is not "-", false otherwise.</pre>
+  Private Member Variables:<br>
+  <pre>
+    int m_shipNums: stores number of ships each player is given. Valid options are 1-5<br>    int remainingShip: stores count of the remainingShips in play<br>    std::string **m_board: 2D array of strings to function as the playBoard<br>    std::string **m_playerViewBoard: 2D array of strings to function as a viewing board for a player<br>    Battleship** ships: array of Battleship pointers to store a dynamic amount of battlehsips</pre>
+  </p>
+
 
   
   <p id="executive.h">
