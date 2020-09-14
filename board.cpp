@@ -273,12 +273,17 @@ bool Board:: isLost(){
 //destructor, deallocatte m_board and m_playerViewBoard
 Board:: ~Board(){
     for(int i = 0; i < 10; i++){
-    delete [] m_board[i];
+    delete[] m_board[i];
   }
   delete[] m_board;
 
   for(int i = 0; i < 10; i++){
-    delete [] m_playerViewBoard[i];
+    delete[] m_playerViewBoard[i];
   }
   delete[] m_playerViewBoard;
+
+  for(int i = 0; i < m_shipNums; i++){
+        delete ships[i];
+    }
+    delete[] ships;
 }
