@@ -3,6 +3,31 @@
 <html>
 
   <body>
+<h1>Class: Battleship</h1>
+
+<p>Constructor: Battleship(int size)<br>
+  <pre>
+  	Preconditions: None<br>	Postconditions: New Battleship created<br>	Return: None</pre>
+  Destructor: ~Battleship()<br><pre>
+  	Preconditions: None
+    	Postconditions: Battleship destroyed<br>	Return: None</pre>
+  Size fetcher: int getSize()<br>
+  <pre>
+    Preconditions: the size must be between 1 and 5<br>    Postconditions: gets the ships size from m_size<br>    Return: returns integer value stored in m_size</pre>
+  bool isDestroyed()<br>
+  <pre>
+    Preconditions: The ship is hit. Method called to check for ships total destruction. <br>    Postconditions: None<br>    Return: returns true if ship is sunk, false otherwise.</pre>
+  std::string getShipType()<br>
+  <pre>
+    Preconditions: None<br>    Postconditions: get the ships type<br>    Return: return shipType</pre>
+  void isAttacked()<br>
+  <pre>
+    Preconditions: The ship is Hit<br>    Postconditions: update m_status when ship is being attacked<br>    Return: void function does not return but checks the ships status</pre>
+  Private Member Variables:<br>
+  <pre>
+    int m_size: stores length of ship. Valid sizes are 1-5<br>    bool m_orientation: stores orientation of the ship(horizontal or vertical)<br>    std::string shipType: stores the shipType (size as a string)<br>    std::string m_status: stores the status of the ship as it gets hit</pre>
+  </p>
+
   
   <p id="executive.h">
   
