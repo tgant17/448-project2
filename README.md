@@ -38,6 +38,10 @@ executable name: battleship
 ## Authors
 
 * **Jack Gould** - *Initial work* - [JackNGould](https://github.com/JackNGould)
+* **Grant Henry** - *Initial work* - [GrantHenry](https://github.com/gkhenry142)
+* **Thang Minh Le** - *Initial work* - [Thang-sudo](https://github.com/Thang-sudo)
+* **Wenxuan Hu** - *Initial work* - [EpicJoe](https://github.com/EpicJoe)
+* **Logan Michels** - *Initial work* - [l583m086](https://github.com/l583m086)
 
 ## Contributors
 
