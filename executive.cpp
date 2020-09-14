@@ -118,7 +118,7 @@ void Executive::run()
                  
         }        
     }
-    system("cls");
+    system("clear");
     playerToggle = 2;
     //Player2 set ships
     int j = 1;
@@ -171,7 +171,7 @@ void Executive::run()
             }
         }        
     }
-    system("cls");
+    system("clear");
     playerToggle = 1;
     cout<<"----------------------------------------------------------------------------"<<endl;
     cout<<"Now that everyone has placed down their battleships, we can begin the game.\n";
@@ -192,15 +192,16 @@ void Executive::run()
             cin>>col>>row;
             try{
                 if(player1->Attack(player2->getBoard(), row, col)){
+                    system("clear");
                     cout<<"It's a hit!\n";
                     if(player2->isLost()){
-                        system("cls");
                         cout<<"Player"<<playerToggle<<" wins"<<endl;
                         player2->printMyCurrentBoard();
                         break;
                     }
                 }
                 else{
+                        system("clear");
                         cout<<"It's a miss, try again next turn\n";
                     }
                 playerToggle = 2;
@@ -221,9 +222,9 @@ void Executive::run()
 
             if(player2->Attack(player1->getBoard(), row, col))
             {
+                system("clear");
                 cout<<"It's a hit!\n";
                 if(player1->isLost()){
-                    system("cls");
                     cout<<"Player"<<playerToggle<<" wins"<<endl;
                     player1->printMyCurrentBoard();
                     break;
@@ -231,6 +232,7 @@ void Executive::run()
             }
             else
             {
+                system("clear");
                 cout<<"It's a miss, try again next turn\n";
             }
             playerToggle = 1;
