@@ -113,6 +113,41 @@
     Player* player1: Pointer to a player object for player1<br>    Player* player2: pointer to a player object for player 2</pre>
   </p>
   
+  <h4>Class: Player</h4>
+<p>Constructor: Player(int playerId, int ShipNums)<br>
+  <pre>
+  	Preconditions: None<br>	Postconditions: New player created<br>	Return: None</pre>
+  Destructor: ~Player()<br><pre>
+  	Preconditions: None
+    	Postconditions: Player destroyed, memory deallocated<br>	Return: None</pre>
+  bool setShip(char orientation, string shipType, int rowStart, char colStart, int rowEnd, char colEnd)<br>
+  <pre>
+    Preconditions: Orientation, shipType, rowStart, colStart, rowEnd, and colEnd valid.<br>    Postconditions: sets the ship in place.<br>    Return: none.</pre>
+  bool Attack(Board* otherPlayerBoard, int row, char col)<br>
+  <pre>
+    Preconditions: none.<br>    Postconditions: Calls printBoard() in board.h.<br>    Return: trus if attack successfully performed on opponent's ship.</pre>
+  void printMyCurrentBoard()<br>
+  <pre>
+    Preconditions: none<br>    Postconditions: prints the current board<br>    Return: none</pre>
+  void printMyMovesHistory()<br>
+  <pre>
+    Preconditions: none<br>    Postconditions: prints the moves history.<br>    Return: none</pre>
+  bool isLost()<br>
+  <pre>
+    Preconditions: none<br>    Postconditions: check remaining ships counter.<br>    Return: true if remainingShip == 0, false otherwise</pre>
+  int getPlayerID()<br>
+  <pre>
+    Preconditions: none. <br>    Postconditions: gets playerId<br>    Return: returns m_playerId.</pre>
+  int getNumsOfRemainingShip()<br>
+  <pre>
+    Preconditions: none.<br>    Postconditions: gets number of remaining ships. <br>    Return: returns int remainingShip</pre>
+  Board* getBoard() const<br>
+  <pre>
+    Preconditions: none.<br>    Postconditions: none.<br>    Return: returns the player's board</pre>
+  Private Member Variables:<br>
+  <pre>
+    int numofships: stores number of ships this player has. Valid options are 1-5<br>    int m_playerId: stores identifying number of this player<br>    Board* m_Board: pointer to this player's board<br>    std::string historyguess: stores player's guess for an attack vector</pre>
+  </p>
     
   </body>
 
