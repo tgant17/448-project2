@@ -14,16 +14,17 @@
 #include "board.h"
 #include "player.h"
 #include <iostream>
+#include <cstdlib>
 #include <fstream>
 #include <string>
-
 class Executive
 {
 private:
-// Board m_Board1;
-// Board m_Board2;
-Player* player1;
-Player* player2;
+    // Board m_Board1;
+    // Board m_Board2;
+    Player *player1;
+    Player *player2;
+    Player *AI;
 
 public:
     Executive();
@@ -38,5 +39,7 @@ public:
     /*Pre: destructor for object
     Post: destroys executive object once if falls out of scope
     Return: nothing*/
+
+    char convertIntToChar(int number);
 };
 #endif
