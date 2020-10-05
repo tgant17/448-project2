@@ -27,8 +27,8 @@ Clone this repository into a directory
 Compilation needs to be ran on the machine afterwords. Makefile included. Use 'make' and 'make clean' commands
 
 ## Run:
-*executable name: battleship
-*Run in terminal using: ./battleship
+* executable name: battleship
+* Run in terminal using: ./battleship
 
 ## Built With
 * [GNU Compiler Collection - GCC](https://gcc.gnu.org/) - C++ compiler used. 
