@@ -239,7 +239,7 @@ void Executive::run()
 
             else
             {
-                if (choice == 1)
+                if (choice == 1) //good
                 {
                     row = rand() % 9 + 1;
                     col = convertIntToChar(rand() % 9 + 1);
@@ -338,7 +338,7 @@ void Executive::run()
                                 }
                                 else
                                 {
-                                    system("clear");
+                                    // system("clear");
                                     cout << "It's a hit!\n";
                                     checkFire = true;
                                     if (player1->isLost())
@@ -352,8 +352,8 @@ void Executive::run()
                             }
                             else
                             {
-                                system("clear");
-                                cout << "It's a miss, try again next turn\n";
+                                // system("clear");
+                                cout << "It's a miss, try again next turn(AI)\n";
                             }
 
                             cout << "AI" << "'s remaining ships: " << AI->getNumsOfRemainingShip() << endl;
@@ -372,34 +372,33 @@ void Executive::run()
                             cout << e.what() << endl;
                         }
                     }
-                    else
+                    else //before they have hit they fire randomly -- just like easy
                     {
                         row = rand() % 9 + 1;
                         col = convertIntToChar(rand() % 9 + 1);
                         try
                         {
+                            cout << "AI" << "'s remaining ships: " << AI->getNumsOfRemainingShip() << endl;
+                            cout << endl;
+                            // cout << "AI" << "'s current board" << endl;
+                            // AI->printMyCurrentBoard();
                             if (AI->Attack(player1->getBoard(), row, col))
                             {
-                                system("clear");
-                                cout << "It's a hit!\n";
+                                // system("clear");
                                 checkFire = true;
+                                cout << "It's a hit!\n";
                                 if (player1->isLost())
                                 {
                                     cout << "Player" << playerToggle << " wins" << endl;
                                     AI->printMyCurrentBoard();
-
                                     break;
                                 }
                             }
                             else
                             {
-                                cout << "It's a miss, try again next turn\n";
-                                system("clear");
+                                cout << "It's a miss, try again next turn(AI)\n";
+                                // system("clear");
                             }
-
-                            cout << "AI" << "'s remaining ships: " << AI->getNumsOfRemainingShip() << endl;
-                            // cout << "AI" << "'s current board" << endl;
-                            // AI->printMyCurrentBoard();
                             cout << "AI" << "'s move history" << endl;
                             AI->printMyMovesHistory();
                             cout << "Enter any character and hit enter to skip---------------------------------------------------";
@@ -414,7 +413,7 @@ void Executive::run()
                         }
                     }
                 }
-                else if (choice == 3)
+                else if (choice == 3) //good
                 {
                     row = 1;
                     col = 1;
@@ -438,7 +437,7 @@ void Executive::run()
                             col = convertIntToChar(col);
                             if (AI->Attack(player1->getBoard(), row, col))
                             {
-                                system("clear");
+                                // system("clear");
                                 cout << "It's a hit!\n";
                                 check = true;
                                 if (player1->isLost())
@@ -450,7 +449,7 @@ void Executive::run()
                             }
                             else
                             {
-                                system("clear");
+                                // system("clear");
                                 cout << "It's a miss, try again next turn\n";
                             }
 
