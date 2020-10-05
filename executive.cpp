@@ -1,15 +1,16 @@
 /* -----------------------------------------------------------------------------
  *
  * File Name:  Executive.cpp
- * Author: Grant Henry
+ * Author: Tristan Gant, Fengming Yang
  * Assignment:   EECS-448 Project 1
  * Description:  Defines all methods established in the executive.h file
- * Date: 9-7-2020
+ * Date: 10-4-2020
  *
  ---------------------------------------------------------------------------- */
 //Start your program.
 #include "executive.h"
 #include <stdexcept>
+#include <stdlib.h>
 #include <limits>
 #include <time.h>
 using namespace std;
@@ -30,9 +31,10 @@ void Executive::run()
     string user_input;
     int choice = 0;
 
+    system("clear");
     cout << "Welcome to Team 6's Battleship Game!\n";
+    cout << "This game was extended by Team 17!" << endl;
     cout << "This is a two-player game or you can play with AI.\n\n";
-    cout << "How many battleships will each team be starting with?\n";
     cout << "Do you want to play with AI?(YES OR NO): ";
     cin >> user_input;
     if (user_input == "YES" || user_input == "Yes" || user_input == "yes")
@@ -44,6 +46,7 @@ void Executive::run()
         cout << "Input your choice: ";
         cin >> choice;
         system("clear");
+        cout << "How many ships do you want to play with?" << endl;
         cout << "Please type out your choice and hit enter:\n\n";
         cout << "1 battleship (for each player): '1'\n";
         cout << "2 battleships:                  '2'\n";
@@ -52,7 +55,7 @@ void Executive::run()
         cout << "5 battleships:                  '5'\n";
         while (1)
         {
-            cout << "Your choice: ";
+            cout << "\nYour choice: ";
             if (cin >> userChoice)
             {
                 if (userChoice >= 1 && userChoice <= 5)
@@ -89,6 +92,8 @@ void Executive::run()
             //Players put ships on their boards
             if (playerToggle == 1)
             {
+                system("clear");
+                player1->printMyCurrentBoard();
                 shipType = to_string(i);
                 cout << "Player " << playerToggle << ", place your 1X" << i << " battleship onto your board.\n";
                 while (1)
@@ -96,13 +101,15 @@ void Executive::run()
                     cout << "Enter orientation (h for horizontal, v for vertical): ";
                     if (cin >> orientation)
                     {
-                        if (orientation == 'h' || orientation == 'v')
+                        if (orientation == 'h' || orientation == 'v' || orientation == 'H' || orientation == 'V')
                         {
                             break;
                         }
                         else
                         {
                             cout << "Please enter h or v for orientation" << endl;
+                            break;
+
                         }
                     }
                     else
@@ -144,7 +151,7 @@ void Executive::run()
             }
         }
         system("clear");
-
+       
         playerToggle = 2;
         //AI set ships
         int j = 1;
@@ -209,7 +216,7 @@ void Executive::run()
                     if (player1->Attack(AI->getBoard(), row, col))
                     {
                         system("clear");
-                        cout << "It's a hit!\n";
+                        cout << "It's a hit!\n\n";
                         if (AI->isLost())
                         {
                             cout << "Player" << playerToggle << " wins" << endl;
@@ -220,7 +227,7 @@ void Executive::run()
                     else
                     {
                         system("clear");
-                        cout << "It's a miss, try again next turn\n";
+                        cout << "It's a miss, try again next turn\n\n";
                     }
                     playerToggle = 2;
                 }
@@ -238,9 +245,13 @@ void Executive::run()
                     col = convertIntToChar(rand() % 9 + 1);
                     try
                     {
+                        cout << "AI" << "'s remaining ships: " << AI->getNumsOfRemainingShip() << endl;
+                        cout << endl;
+                        // cout << "AI" << "'s current board" << endl;
+                        // AI->printMyCurrentBoard();
                         if (AI->Attack(player1->getBoard(), row, col))
                         {
-                            system("clear");
+                            // system("clear");
                             cout << "It's a hit!\n";
                             if (player1->isLost())
                             {
@@ -251,19 +262,12 @@ void Executive::run()
                         }
                         else
                         {
-                            cout << "It's a miss, try again next turn\n";
-                            system("clear");
+                            cout << "It's a miss, try again next turn(AI)\n";
+                            // system("clear");
                         }
-
-                        cout << "AI"
-                             << "'s remaining ships: " << AI->getNumsOfRemainingShip() << endl;
-                        cout << "AI"
-                             << "'s current board" << endl;
-                        AI->printMyCurrentBoard();
-                        cout << "AI"
-                             << "'s move history" << endl;
+                        cout << "AI" << "'s move history" << endl;
                         AI->printMyMovesHistory();
-                        cout << "Enter Anything to skip---------------------------------------------------";
+                        cout << "Enter any character and hit enter to skip---------------------------------------------------";
                         string skip = "";
                         cin >> skip;
                         playerToggle = 1;
@@ -352,15 +356,12 @@ void Executive::run()
                                 cout << "It's a miss, try again next turn\n";
                             }
 
-                            cout << "AI"
-                                 << "'s remaining ships: " << AI->getNumsOfRemainingShip() << endl;
-                            cout << "AI"
-                                 << "'s current board" << endl;
-                            AI->printMyCurrentBoard();
-                            cout << "AI"
-                                 << "'s move history" << endl;
+                            cout << "AI" << "'s remaining ships: " << AI->getNumsOfRemainingShip() << endl;
+                            // cout << "AI" << "'s current board" << endl;
+                            // AI->printMyCurrentBoard();
+                            cout << "AI" << "'s move history" << endl;
                             AI->printMyMovesHistory();
-                            cout << "Enter Anything to skip---------------------------------------------------";
+                            cout << "Enter any character and hit enter to skip---------------------------------------------------";
                             string skip = "";
                             cin >> skip;
                             playerToggle = 1;
@@ -396,15 +397,12 @@ void Executive::run()
                                 system("clear");
                             }
 
-                            cout << "AI"
-                                 << "'s remaining ships: " << AI->getNumsOfRemainingShip() << endl;
-                            cout << "AI"
-                                 << "'s current board" << endl;
-                            AI->printMyCurrentBoard();
-                            cout << "AI"
-                                 << "'s move history" << endl;
+                            cout << "AI" << "'s remaining ships: " << AI->getNumsOfRemainingShip() << endl;
+                            // cout << "AI" << "'s current board" << endl;
+                            // AI->printMyCurrentBoard();
+                            cout << "AI" << "'s move history" << endl;
                             AI->printMyMovesHistory();
-                            cout << "Enter Anything to skip---------------------------------------------------";
+                            cout << "Enter any character and hit enter to skip---------------------------------------------------";
                             string skip = "";
                             cin >> skip;
                             playerToggle = 1;
@@ -456,15 +454,12 @@ void Executive::run()
                                 cout << "It's a miss, try again next turn\n";
                             }
 
-                            cout << "AI"
-                                 << "'s remaining ships: " << AI->getNumsOfRemainingShip() << endl;
-                            cout << "AI"
-                                 << "'s current board" << endl;
-                            AI->printMyCurrentBoard();
-                            cout << "AI"
-                                 << "'s move history" << endl;
+                            cout << "AI" << "'s remaining ships: " << AI->getNumsOfRemainingShip() << endl;
+                            // cout << "AI" << "'s current board" << endl;
+                            // AI->printMyCurrentBoard();
+                            cout << "AI" << "'s move history" << endl;
                             AI->printMyMovesHistory();
-                            cout << "Enter Anything to skip---------------------------------------------------";
+                            cout << "Enter any character and hit enter to skip---------------------------------------------------";
                             string skip = "";
                             cin >> skip;
                             playerToggle = 1;
@@ -549,15 +544,12 @@ void Executive::run()
                                 cout << "It's a miss, try again next turn\n";
                             }
 
-                            cout << "AI"
-                                 << "'s remaining ships: " << AI->getNumsOfRemainingShip() << endl;
-                            cout << "AI"
-                                 << "'s current board" << endl;
-                            AI->printMyCurrentBoard();
-                            cout << "AI"
-                                 << "'s move history" << endl;
+                            cout << "AI" << "'s remaining ships: " << AI->getNumsOfRemainingShip() << endl;
+                            // cout << "AI" << "'s current board" << endl;
+                            // AI->printMyCurrentBoard();
+                            cout << "AI" << "'s move history" << endl;
                             AI->printMyMovesHistory();
-                            cout << "Enter Anything to skip---------------------------------------------------";
+                            cout << "Enter any character and hit enter to skip---------------------------------------------------";
                             string skip = "";
                             cin >> skip;
                             playerToggle = 1;
@@ -574,8 +566,11 @@ void Executive::run()
         }
     }
 
-    else
+    else if(user_input == "no" || user_input == "No" || user_input == "NO" || user_input == "nO")
     {
+        system("clear"); 
+        cout << "The game will be played with TWO players\n" << endl;
+        cout << "How many ships would you like play with?\n";
         cout << "Please type out your choice and hit enter:\n\n";
         cout << "1 battleship (for each player): '1'\n";
         cout << "2 battleships:                  '2'\n";
