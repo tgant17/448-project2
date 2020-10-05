@@ -1,10 +1,10 @@
 /* -----------------------------------------------------------------------------
  *
  * File Name: Executive.h
- * Author: Grant Henry
- * Assignment:  EECS 448 Project1
+ * Author:  Tristan Gant, Fengming Yang, Chenyu Hao
+ * Assignment:  EECS 448 Project2
  * Description:  This program handle the executive action needed for the project
- * Date: 9-7-20
+ * Date: 10-4-20
  *
  ---------------------------------------------------------------------------- */
 //Start your program.
@@ -41,5 +41,9 @@ public:
     Return: nothing*/
 
     char convertIntToChar(int number);
+    /*Pre: None
+    Post: changes an int into a char
+    Param: Takes in an int to be converted
+    Return: the converted int
 };
 #endif

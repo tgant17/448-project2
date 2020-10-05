@@ -1,10 +1,10 @@
 /* -----------------------------------------------------------------------------
  *
  * File Name:  Executive.cpp
- * Author: Tristan Gant, Fengming Yang
- * Assignment:   EECS-448 Project 1
+ * Author: Tristan Gant, Fengming Yang, Chenyu Hao
+ * Assignment:   EECS-448 Project 2
  * Description:  Defines all methods established in the executive.h file
- * Date: 10-4-2020
+ * Date: 10-4-20
  *
  ---------------------------------------------------------------------------- */
 //Start your program.
