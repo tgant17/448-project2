@@ -44,6 +44,6 @@ public:
     /*Pre: None
     Post: changes an int into a char
     Param: Takes in an int to be converted
-    Return: the converted int
+    Return: the converted int */
 };
 #endif
